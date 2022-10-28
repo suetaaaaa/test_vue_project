@@ -1,47 +1,81 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+	<div class="app">
+		<h1>POSTS VUE.JS</h1>
+		<add-button @click="showDialog">
+			Create a post
+		</add-button>
+		<post-dialog v-model:show="isDialogVisible">
+			<PostForm
+				@create="createPost"
+			/>
+		</post-dialog>
+		<PostList
+			:posts="posts"
+			@remove="removePost"
+		/>
+	</div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+
+
+<script>
+import PostForm from "@/components/PostForm.vue";
+import PostList from "@/components/PostList.vue";
+
+export default {
+	components: {
+		PostForm, PostList
+	},
+	data() {
+		return {
+			posts: [
+				{
+					id: 1,
+					title: 'JavaScript post',
+					body: 'Post description'
+				},
+				{
+					id: 2,
+					title: 'Python post',
+					body: 'Post description'
+				},
+				{
+					id: 3,
+					title: 'C++ post',
+					body: 'Post description'
+				},
+			],
+			isDialogVisible: false,
+		}
+	},
+	methods: {
+		createPost(post) {
+			this.posts.push(post);
+			this.isDialogVisible = false;
+		},
+		removePost(post) {
+			this.posts = this.posts.filter(p => p.id !== post.id);
+		},
+		showDialog() {
+			this.isDialogVisible = true;
+		}
+	},
+}
+</script>
+
+
+
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.app {
+	padding: 20px;
 }
 </style>
+
+
+
