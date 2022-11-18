@@ -1,5 +1,5 @@
 <template>
-	<form @submit.prevent>
+	<form class="post-form" @submit.prevent>
 		<h4>Create your post!</h4>
 		<post-input
 			v-model.trim="post.title"
@@ -19,6 +19,7 @@
 
 <script>
 export default {
+	name: 'post-form',
 	data() {
 		return {
 			post: {
@@ -36,12 +37,12 @@ export default {
 				body: '',
 			};
 		}
-	},
+	}
 }
 </script>
 
 <style scoped>
-form {
+.post-form {
 	display: flex;
 	flex-direction: column;
 }

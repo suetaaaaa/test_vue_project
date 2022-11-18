@@ -1,36 +1,54 @@
 <template>
-	<div class="post_list" v-if="posts.length > 0">
+	<div class="post-list" v-if="posts.length > 0">
 		<h3>Posts list</h3>
-		<PostItem
-			v-for="post in posts"
-			:post="post"
-			:key="post.id"
-			@remove="$emit('remove', post)"
-		/>
+		<transition-group name="post-list">
+			<post-item
+				v-for="post in posts"
+				:post="post"
+				:key="post.id"
+				@remove="$emit('remove', post)"
+			/>
+		</transition-group>
 	</div>
-	<h2 v-else style="color: red">
-		Oops... Seems like no posts there...
-	</h2>
+	<div class="post-list" v-else>	
+		<h2 style="color: red">
+			Oops... Seems like no posts there...
+		</h2>
+	</div>
 </template>
 
 <script>
-import PostItem from './PostItem.vue';
-
 export default {
-	components: {
-		PostItem
-	},
+	name: 'post-list',
 	props: {
 		posts: {
 			type: Array,
-			required: true,
+			required: true
 		}
 	},
 }
 </script>
 
 <style scoped>
-.post_list{
+.post-list {
 	margin-top: 15px;
+}
+
+.post-list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.post-list-enter-active,
+.post-list-leave-active {
+  transition: all .2s ease;
+}
+.post-list-enter-from,
+.post-list-leave-to {
+  opacity: 0;
+  transform: translateX(130px);
+}
+
+.post-list-move {
+  transition: transform 0.2s ease;
 }
 </style>

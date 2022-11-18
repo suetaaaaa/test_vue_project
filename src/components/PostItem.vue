@@ -1,6 +1,7 @@
 <template>
 	<div class="post">
 		<div>
+			<div><strong>№</strong> {{ post.id }}</div>
 			<div><strong>Title:</strong> {{ post.title }}</div>
 			<div><strong>Body:</strong> {{ post.body }}</div>
 		</div>
@@ -14,6 +15,7 @@
 
 <script>
 export default {
+	name: 'post-item',
 	props: {
 		post: {
 			type: Object,
